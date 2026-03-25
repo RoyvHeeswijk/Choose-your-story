@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CANAL+ | De Perfecte Misdaad - Choose Your Story</title>
+<style>
+:root {
+  --bg-start: #1a1a2e;
+  --bg-mid: #16213e;
+  --bg-end: #0f3460;
+  --btn-start: #ff6b6b;
+  --btn-end: #f7931e;
+  --accent-start: #4ecdc4;
+  --accent-end: #44a08d;
+  --glass-bg: rgba(255,255,255,0.1);
+  --glass-border: rgba(255,255,255,0.2);
+  --text-main: #ffffff;
+  --text-secondary: #e0e0e0;
+  --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --container: 1400px;
+  --section-spacing: 60px;
+  --card-padding: 30px;
+  --card-radius: 20px;
+  --grid-gap: 30px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+  color: var(--text-main);
+  font-size: 18px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ─── HEADER ─── */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(26,26,46,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 14px 0;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(90deg, var(--btn-start), var(--accent-start));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255,107,107,0.3);
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--btn-start), var(--accent-start));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255,107,107,0.3);
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ─── HERO ─── */
+.hero {
+  padding: 140px 0 var(--section-spacing);
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  padding: 10px 28px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: bold;
+  background: linear-gradient(180deg, #ffffff, var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  line-height: 1.15;
+}
+
+.hero-desc {
+  font-size: 20px;
+  color: var(--text-secondary);
+  max-width: 800px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(45deg, var(--btn-start), var(--btn-end));
+  color: #fff;
+  border: none;
+  padding: 20px 60px;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 8px 30px rgba(255,107,107,0.35);
+  font-family: var(--font);
+}
+
+.play-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(255,107,107,0.5);
+}
+
+.play-btn .icon { font-size: 28px; }
+
+/* ─── STATS ─── */
+.stats {
+  padding: var(--section-spacing) 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--grid-gap);
+}
+
+.stat-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 0.5s forwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0s; }
+.stat-card:nth-child(2) { animation-delay: 0.1s; }
+.stat-card:nth-child(3) { animation-delay: 0.2s; }
+.stat-card:nth-child(4) { animation-delay: 0.3s; }
+.stat-card:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: bold;
+  background: linear-gradient(45deg, var(--accent-start), var(--accent-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ─── VIDEO PLAYER ─── */
+.player-section {
+  padding: var(--section-spacing) 0;
+  display: none;
+}
+
+.player-section.active { display: block; }
+
+.player-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16/9;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a1a, #1a1a3a);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.video-placeholder .scene-text {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.video-placeholder .scene-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 500px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.video-placeholder .timer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.6);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  padding: 50px 24px 18px;
+}
+
+.progress-wrap {
+  position: relative;
+  height: 6px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--btn-start), var(--btn-end));
+  border-radius: 3px;
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.choice-marker {
+  position: absolute;
+  top: -6px;
+  width: 3px;
+  height: 18px;
+  background: var(--accent-start);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ctrl-left, .ctrl-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ctrl-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 6px;
+  transition: transform 0.2s;
+  font-family: var(--font);
+}
+
+.ctrl-btn:hover { transform: scale(1.15); }
+
+.time-display {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  width: 80px;
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.chapter-label {
+  font-size: 13px;
+  color: var(--accent-start);
+  font-weight: 600;
+}
+
+/* ─── CHOICE OVERLAY ─── */
+.choice-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(10,10,30,0.92);
+  backdrop-filter: blur(15px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.choice-overlay.active { display: flex; }
+
+.choice-content {
+  max-width: 1000px;
+  width: 100%;
+  text-align: center;
+}
+
+.choice-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.choice-subtitle {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+}
+
+.choice-timer-bar {
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-bottom: 36px;
+  overflow: hidden;
+}
+
+.choice-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--btn-start), var(--btn-end));
+  width: 100%;
+  transition: width 15s linear;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.choice-card {
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  border-radius: var(--card-radius);
+  padding: 28px 22px;
+  cursor: pointer;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.choice-card:hover {
+  transform: scale(1.02);
+  border-color: var(--accent-start);
+  box-shadow: 0 0 30px rgba(78,205,196,0.2);
+}
+
+.choice-card .preview-icon {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #0d0d2b, #1a1a4a);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.preview-icon .play-mini {
+  width: 50px;
+  height: 50px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: background 0.3s;
+}
+
+.choice-card:hover .play-mini {
+  background: rgba(255,107,107,0.5);
+}
+
+.choice-card .opt-label {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.choice-card .opt-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.choice-card .opt-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.opt-meta .pct {
+  color: var(--accent-start);
+  font-weight: 600;
+}
+
+.opt-meta .risk-high { color: #ff6b6b; }
+.opt-meta .risk-med  { color: #f7931e; }
+.opt-meta .risk-low  { color: #4ecdc4; }
+
+.choice-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.action-btn {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, background 0.3s;
+  font-family: var(--font);
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.18);
+}
+
+.action-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── ENDING SCREEN ─── */
+.ending-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ending-overlay.active {
+  display: flex;
+  animation: endingBgShift 4s ease infinite alternate;
+}
+
+@keyframes endingBgShift {
+  0%   { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+  100% { background: linear-gradient(135deg, #0f3460, #1a1a2e); }
+}
+
+.ending-content {
+  text-align: center;
+  max-width: 700px;
+  position: relative;
+  z-index: 1;
+}
+
+.ending-badge {
+  display: inline-block;
+  background: linear-gradient(45deg, var(--btn-start), var(--btn-end));
+  padding: 10px 28px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: revealText 0.8s 0.3s forwards;
+}
+
+.ending-title {
+  font-size: 44px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: revealText 0.8s 0.5s forwards;
+}
+
+.ending-subtitle {
+  font-size: 22px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  opacity: 0;
+  animation: revealText 0.8s 0.7s forwards;
+}
+
+.ending-desc {
+  font-size: 17px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: revealText 0.8s 0.9s forwards;
+}
+
+@keyframes revealText {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ending-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: revealText 0.8s 1.1s forwards;
+}
+
+.ending-stat-item .e-num {
+  font-size: 32px;
+  font-weight: bold;
+  background: linear-gradient(45deg, var(--accent-start), var(--accent-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ending-stat-item .e-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ending-actions {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: revealText 0.8s 1.3s forwards;
+}
+
+.end-btn {
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: var(--font);
+}
+
+.end-btn:hover {
+  transform: translateY(-4px);
+}
+
+.end-btn.primary {
+  background: linear-gradient(45deg, var(--btn-start), var(--btn-end));
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(255,107,107,0.3);
+}
+
+.end-btn.primary:hover {
+  box-shadow: 0 14px 40px rgba(255,107,107,0.45);
+}
+
+.end-btn.secondary {
+  background: var(--glass-bg);
+  color: #fff;
+  border: 1px solid var(--glass-border);
+}
+
+.end-btn.secondary:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* ─── CONFETTI ─── */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3001;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ─── CHOICES HISTORY (sidebar) ─── */
+.choices-sidebar {
+  position: fixed;
+  right: -360px;
+  top: 80px;
+  width: 340px;
+  max-height: calc(100vh - 100px);
+  background: rgba(26,26,46,0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: 28px;
+  z-index: 900;
+  transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
+  overflow-y: auto;
+}
+
+.choices-sidebar.open { right: 20px; }
+
+.sidebar-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.choice-history-item {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.choice-history-item .ch-label {
+  font-size: 13px;
+  color: var(--accent-start);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.choice-history-item .ch-text {
+  font-size: 15px;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  right: 20px;
+  top: 90px;
+  z-index: 950;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.sidebar-toggle.visible { display: flex; }
+.sidebar-toggle:hover { transform: scale(1.1); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .choice-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .choice-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 34px; }
+  .hero-desc { font-size: 16px; }
+  body { font-size: 16px; }
+  .play-btn { padding: 16px 40px; font-size: 18px; }
+  .ending-title { font-size: 32px; }
+  .ending-stats { gap: 24px; }
+  .profile-name { display: none; }
+  .choice-title { font-size: 24px; }
+}
+
+@media (max-width: 500px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .ending-actions { flex-direction: column; align-items: center; }
+  .choice-actions { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container">
+    <div class="logo" onclick="goHome()">CANAL+</div>
+    <div class="profile">
+      <span class="profile-name">Alex D.</span>
+      <div class="avatar">AD</div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="container">
+    <div class="badge">Choose Your Plot ⭐</div>
+    <h1>De Perfecte Misdaad</h1>
+    <p class="hero-desc">
+      Privédetective Thomas Verhoeven krijgt een mysterieuze opdracht: los de moord op zakenman Karel de Vries op. 
+      Maar niets is wat het lijkt — <strong>JIJ kiest wie de dader is.</strong>
+    </p>
+    <button class="play-btn" onclick="startMovie()">
+      <span class="icon">▶</span> START JOUW VERHAAL
+    </button>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" id="statsSection">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Unieke Eindes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">90</div>
+        <div class="stat-label">Min Jouw Verhaal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">78%</div>
+        <div class="stat-label">Kijker Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">-40%</div>
+        <div class="stat-label">Minder Scroll</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+40%</div>
+        <div class="stat-label">Betrokkenheid</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO PLAYER -->
+<section class="player-section" id="playerSection">
+  <div class="container">
+    <div class="player-wrap" id="playerWrap">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="timer" id="sceneTimer">00:00 / 90:00</div>
+        <div class="scene-text" id="sceneTitle">Hoofdstuk 1: De Opdracht</div>
+        <div class="scene-desc" id="sceneDesc">Thomas ontvangt een anonieme brief met details over de moord op Karel de Vries...</div>
+      </div>
+      <div class="controls">
+        <div class="progress-wrap" id="progressBar" onclick="seekProgress(event)">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="choice-marker" style="left:22.2%"  title="Keuze 1"></div>
+          <div class="choice-marker" style="left:44.4%"  title="Keuze 2"></div>
+          <div class="choice-marker" style="left:66.6%"  title="Keuze 3"></div>
+          <div class="choice-marker" style="left:88.8%"  title="Keuze 4"></div>
+        </div>
+        <div class="control-row">
+          <div class="ctrl-left">
+            <button class="ctrl-btn" id="playPauseBtn" onclick="togglePlayPause()">⏸</button>
+            <button class="ctrl-btn" onclick="skipBack()">⏪</button>
+            <button class="ctrl-btn" onclick="skipForward()">⏩</button>
+            <input type="range" class="volume-slider" min="0" max="100" value="80">
+            <span class="time-display" id="timeDisplay">00:00 / 90:00</span>
+          </div>
+          <div class="ctrl-right">
+            <span class="chapter-label" id="chapterLabel">Hfst 1: De Opdracht</span>
+            <button class="ctrl-btn" onclick="toggleFullscreen()">⛶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHOICE OVERLAY -->
+<div class="choice-overlay" id="choiceOverlay">
+  <div class="choice-content">
+    <div class="choice-title" id="choiceTitle">Keuze Moment</div>
+    <div class="choice-subtitle" id="choiceSubtitle">Wat doet Thomas?</div>
+    <div class="choice-timer-bar"><div class="choice-timer-fill" id="choiceTimerFill"></div></div>
+    <div class="choice-grid" id="choiceGrid"></div>
+    <div class="choice-actions">
+      <button class="action-btn" id="rewindBtn" onclick="useRewind()">⏪ Rewind (1x gratis)</button>
+      <button class="action-btn" onclick="toggleSidebar()">📊 Stats anderen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ENDING OVERLAY -->
+<div class="ending-overlay" id="endingOverlay">
+  <div class="confetti-container" id="confettiContainer"></div>
+  <div class="ending-content">
+    <div class="ending-badge">JOUW VERHAAL IS COMPLEET</div>
+    <div class="ending-title" id="endingTitle">—</div>
+    <div class="ending-subtitle" id="endingSubtitle">—</div>
+    <div class="ending-desc" id="endingDesc">—</div>
+    <div class="ending-stats">
+      <div class="ending-stat-item">
+        <div class="e-num" id="endStatChoices">4</div>
+        <div class="e-label">Keuzes gemaakt</div>
+      </div>
+      <div class="ending-stat-item">
+        <div class="e-num" id="endStatTime">90 min</div>
+        <div class="e-label">Kijktijd</div>
+      </div>
+      <div class="ending-stat-item">
+        <div class="e-num" id="endStatPct">—</div>
+        <div class="e-label">Koos dit einde</div>
+      </div>
+    </div>
+    <div class="ending-actions">
+      <button class="end-btn secondary" onclick="shareResult()">📤 Deel Resultaat</button>
+      <button class="end-btn primary" onclick="restartMovie()">🔄 Opnieuw — Andere Keuzes</button>
+      <button class="end-btn secondary" onclick="goHome()">🏠 Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHOICES SIDEBAR -->
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">📋</button>
+<div class="choices-sidebar" id="choicesSidebar">
+  <div class="sidebar-title">Jouw Keuzes</div>
+  <div id="sidebarContent"></div>
+</div>
+
+<script>
+const STATE = {
+  playing: false,
+  currentTime: 0,
+  totalTime: 5400,
+  choices: JSON.parse(localStorage.getItem('cplus_choices') || '[]'),
+  currentChoice: 0,
+  rewindUsed: JSON.parse(localStorage.getItem('cplus_rewind') || 'false'),
+  interval: null,
+  choiceTimer: null,
+  inChoiceScreen: false
+};
+
+const CHOICE_POINTS = [1200, 2400, 3600, 4800];
+
+const CHAPTERS = [
+  { start: 0,    title: 'Hfst 1: De Opdracht',        scene: 'Thomas ontvangt een anonieme brief met details over de moord op Karel de Vries...' },
+  { start: 1200, title: 'Hfst 2: Het Onderzoek',       scene: 'Thomas duikt in het verleden van Karel. Drie verdachten komen naar voren...' },
+  { start: 2400, title: 'Hfst 3: De Confrontatie',      scene: 'Het bewijs stapelt zich op. Thomas moet een cruciale beslissing nemen...' },
+  { start: 3600, title: 'Hfst 4: De Waarheid',          scene: 'De puzzelstukjes vallen op hun plek, maar de waarheid is schokkend...' },
+  { start: 4800, title: 'Hfst 5: Het Eindspel',         scene: 'Alles komt samen. De dader wordt ontmaskerd — of toch niet?' }
+];
+
+const CHOICES_DATA = [
+  {
+    title: 'Thomas vindt een bloederige handschoen...',
+    subtitle: 'Het eerste bewijs wijst in drie richtingen. Welk spoor volgt Thomas?',
+    options: [
+      { id: 'A', label: 'Onderzoek de echtgenoot', desc: 'De handschoen past bij zijn garderobe. Thomas gaat naar het landhuis.', pct: 65, risk: 'Hoog', riskClass: 'risk-high' },
+      { id: 'B', label: 'Volg de minnares', desc: 'Ze werd gezien bij het kantoor die avond. Thomas schaduwt haar.', pct: 25, risk: 'Gemiddeld', riskClass: 'risk-med' },
+      { id: 'C', label: 'Onderzoek de zakenrivaal', desc: 'Een miljoenendeal ging niet door. Thomas volgt het geldspoor.', pct: 10, risk: 'Laag', riskClass: 'risk-low' }
+    ]
+  },
+  {
+    title: 'Een getuige wil praten, maar stelt een voorwaarde...',
+    subtitle: 'De getuige heeft cruciale informatie. Wat doet Thomas?',
+    options: [
+      { id: 'A', label: 'Accepteer de voorwaarde', desc: 'De getuige wil immuniteit. Thomas belooft dit — maar kan hij dat waarmaken?', pct: 45, risk: 'Hoog', riskClass: 'risk-high' },
+      { id: 'B', label: 'Bluf en intimideer', desc: 'Thomas doet alsof hij meer weet dan hij echt weet.', pct: 35, risk: 'Gemiddeld', riskClass: 'risk-med' },
+      { id: 'C', label: 'Zoek ander bewijs', desc: 'Thomas vertrouwt de getuige niet en zoekt op eigen houtje verder.', pct: 20, risk: 'Laag', riskClass: 'risk-low' }
+    ]
+  },
+  {
+    title: 'Thomas wordt zelf bedreigd met een cryptisch bericht...',
+    subtitle: 'Iemand wil dat Thomas stopt met het onderzoek. Hoe reageert hij?',
+    options: [
+      { id: 'A', label: 'Ga naar de politie', desc: 'Thomas schakelt inspecteur De Groot in. Maar is de politie te vertrouwen?', pct: 30, risk: 'Laag', riskClass: 'risk-low' },
+      { id: 'B', label: 'Stel een val op', desc: 'Thomas gebruikt het bericht om de afzender te lokken.', pct: 50, risk: 'Hoog', riskClass: 'risk-high' },
+      { id: 'C', label: 'Ga undercover', desc: 'Thomas infiltreert in de innerkring van de verdachte.', pct: 20, risk: 'Gemiddeld', riskClass: 'risk-med' }
+    ]
+  },
+  {
+    title: 'De confrontatie — Thomas staat oog in oog met de dader...',
+    subtitle: 'Het moment van de waarheid. Eén laatste keuze bepaalt alles.',
+    options: [
+      { id: 'A', label: 'Beschuldig direct', desc: 'Thomas legt alle bewijzen op tafel en eist een bekentenis.', pct: 40, risk: 'Hoog', riskClass: 'risk-high' },
+      { id: 'B', label: 'Manipuleer tot bekentenis', desc: 'Thomas speelt een psychologisch spel om de dader te laten bekennen.', pct: 38, risk: 'Gemiddeld', riskClass: 'risk-med' },
+      { id: 'C', label: 'Werk samen met de dader', desc: 'Thomas ontdekt dat de waarheid complexer is. Een onverwachte alliantie.', pct: 22, risk: 'Laag', riskClass: 'risk-low' }
+    ]
+  }
+];
+
+const ENDINGS = {
+  'AAAA': { title: '"De Echtgenoot Is Schuldig"', sub: 'Het klassieke motief: jaloezie en hebzucht.', desc: 'Thomas bewees dat Richard de Vries, de echtgenoot, Karel had vermoord voor de erfenis en de levensverzekering. Een koelbloedige daad, perfect gepland — maar niet perfect genoeg voor Thomas.', pct: '18%' },
+  'BBBB': { title: '"Het Complot van de Minnares"', sub: 'Liefde en verraad gaan hand in hand.', desc: 'Sophie Laurent, Karels minnares, had alles georkestreerd. Ze manipuleerde iedereen om zelf met het fortuin te verdwijnen. Thomas ontrafelde haar web van leugens.', pct: '12%' },
+  'CCCC': { title: '"De Rivalen Framing"', sub: 'Big business, bigger crimes.', desc: 'Marcus van den Berg, de zakenrivaal, had Karel uit de weg geruimd om een miljardendeal door te drukken. Corporate greed op zijn slechtst.', pct: '8%' },
+  'MIXED': { title: '"De Onverwachte Waarheid"', sub: 'Niets is wat het lijkt.', desc: 'Jouw unieke pad leidde tot een schokkende ontdekking: Karel de Vries leeft nog. De "moord" was een elaborate hoax om zijn eigen verdwijning te ensceneren. Thomas moet beslissen: de waarheid onthullen, of meespelen?', pct: '24%' },
+  'AABB': { title: '"Dubbelspel"', sub: 'Twee daders, één complot.', desc: 'De echtgenoot en de minnares werkten samen. Thomas ontdekte hun geheim, maar de waarheid kostte bijna zijn eigen leven.', pct: '15%' },
+  'ABAB': { title: '"Het Kat-en-Muis Spel"', sub: 'De jager wordt de prooi.', desc: 'Thomas speelde een gevaarlijk spel — en werd zelf verdachte. Alleen door slim te manoeuvreren kon hij zijn onschuld bewijzen én de echte dader ontmaskeren.', pct: '10%' },
+  'ABBA': { title: '"Gerechtigheid Op De Rand"', sub: 'De wet is niet altijd rechtvaardig.', desc: 'Thomas vond de dader maar moest kiezen: de wet volgen of eigen rechter spelen. Zijn keuze veranderde alles.', pct: '8%' },
+  'DEFAULT': { title: '"Jouw Unieke Verhaal"', sub: 'Een pad dat niemand anders bewandelde.', desc: 'Jouw combinatie van keuzes leidde tot een uniek einde. Thomas loste de zaak op, maar de prijs was hoog. Sommige waarheden zijn beter verborgen.', pct: '5%' }
+};
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = Math.floor(secs % 60);
+  return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function updateDisplay() {
+  const pct = (STATE.currentTime / STATE.totalTime) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('timeDisplay').textContent = formatTime(STATE.currentTime) + ' / 90:00';
+  document.getElementById('sceneTimer').textContent = formatTime(STATE.currentTime) + ' / 90:00';
+
+  let ch = CHAPTERS[0];
+  for (let i = CHAPTERS.length - 1; i >= 0; i--) {
+    if (STATE.currentTime >= CHAPTERS[i].start) { ch = CHAPTERS[i]; break; }
+  }
+  document.getElementById('chapterLabel').textContent = ch.title;
+  document.getElementById('sceneTitle').textContent = ch.title;
+  document.getElementById('sceneDesc').textContent = ch.scene;
+}
+
+function startMovie() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('statsSection').style.display = 'none';
+  document.getElementById('playerSection').classList.add('active');
+  document.getElementById('sidebarToggle').classList.add('visible');
+  STATE.playing = true;
+  STATE.currentChoice = STATE.choices.length;
+  document.getElementById('playPauseBtn').textContent = '⏸';
+  startPlayback();
+  updateSidebar();
+}
+
+function startPlayback() {
+  if (STATE.interval) clearInterval(STATE.interval);
+  STATE.interval = setInterval(() => {
+    if (!STATE.playing || STATE.inChoiceScreen) return;
+    STATE.currentTime += 3;
+    updateDisplay();
+    checkChoicePoint();
+    if (STATE.currentTime >= STATE.totalTime) {
+      STATE.playing = false;
+      clearInterval(STATE.interval);
+      showEnding();
+    }
+  }, 100);
+}
+
+function checkChoicePoint() {
+  const ci = STATE.currentChoice;
+  if (ci < CHOICE_POINTS.length && STATE.currentTime >= CHOICE_POINTS[ci] && !STATE.inChoiceScreen) {
+    STATE.playing = false;
+    STATE.inChoiceScreen = true;
+    showChoiceScreen(ci);
+  }
+}
+
+function showChoiceScreen(idx) {
+  const data = CHOICES_DATA[idx];
+  document.getElementById('choiceTitle').textContent = data.title;
+  document.getElementById('choiceSubtitle').textContent = data.subtitle;
+
+  const grid = document.getElementById('choiceGrid');
+  grid.innerHTML = '';
+
+  data.options.forEach(opt => {
+    const card = document.createElement('div');
+    card.className = 'choice-card';
+    card.onclick = () => makeChoice(idx, opt.id);
+    card.innerHTML = `
+      <div class="preview-icon"><div class="play-mini">▶</div></div>
+      <div class="opt-label">Optie ${opt.id}: ${opt.label}</div>
+      <div class="opt-desc">${opt.desc}</div>
+      <div class="opt-meta">
+        <span class="pct">${opt.pct}% koos dit</span>
+        <span class="${opt.riskClass}">Risico: ${opt.risk}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  const rwBtn = document.getElementById('rewindBtn');
+  rwBtn.className = STATE.rewindUsed ? 'action-btn disabled' : 'action-btn';
+  rwBtn.textContent = STATE.rewindUsed ? '⏪ Rewind (gebruikt)' : '⏪ Rewind (1x gratis)';
+
+  document.getElementById('choiceOverlay').classList.add('active');
+
+  const fill = document.getElementById('choiceTimerFill');
+  fill.style.transition = 'none';
+  fill.style.width = '100%';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      fill.style.transition = 'width 15s linear';
+      fill.style.width = '0%';
+    });
+  });
+
+  if (STATE.choiceTimer) clearTimeout(STATE.choiceTimer);
+  STATE.choiceTimer = setTimeout(() => {
+    if (STATE.inChoiceScreen) {
+      makeChoice(idx, data.options[0].id);
+    }
+  }, 15000);
+}
+
+function makeChoice(idx, optionId) {
+  if (STATE.choiceTimer) clearTimeout(STATE.choiceTimer);
+  STATE.choices[idx] = optionId;
+  STATE.currentChoice = idx + 1;
+  STATE.inChoiceScreen = false;
+
+  localStorage.setItem('cplus_choices', JSON.stringify(STATE.choices));
+
+  document.getElementById('choiceOverlay').classList.remove('active');
+  STATE.playing = true;
+  document.getElementById('playPauseBtn').textContent = '⏸';
+  updateSidebar();
+}
+
+function useRewind() {
+  if (STATE.rewindUsed || STATE.currentChoice === 0) return;
+  STATE.rewindUsed = true;
+  localStorage.setItem('cplus_rewind', 'true');
+
+  if (STATE.choiceTimer) clearTimeout(STATE.choiceTimer);
+  STATE.inChoiceScreen = false;
+  document.getElementById('choiceOverlay').classList.remove('active');
+
+  STATE.choices.pop();
+  STATE.currentChoice = Math.max(0, STATE.currentChoice - 1);
+  STATE.currentTime = STATE.currentChoice > 0 ? CHOICE_POINTS[STATE.currentChoice - 1] : 0;
+
+  localStorage.setItem('cplus_choices', JSON.stringify(STATE.choices));
+  updateDisplay();
+  updateSidebar();
+  STATE.playing = true;
+  document.getElementById('playPauseBtn').textContent = '⏸';
+}
+
+function togglePlayPause() {
+  if (STATE.inChoiceScreen) return;
+  STATE.playing = !STATE.playing;
+  document.getElementById('playPauseBtn').textContent = STATE.playing ? '⏸' : '▶';
+}
+
+function skipBack() {
+  STATE.currentTime = Math.max(0, STATE.currentTime - 30);
+  updateDisplay();
+}
+
+function skipForward() {
+  STATE.currentTime = Math.min(STATE.totalTime, STATE.currentTime + 30);
+  updateDisplay();
+}
+
+function seekProgress(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  STATE.currentTime = Math.floor(pct * STATE.totalTime);
+  updateDisplay();
+}
+
+function toggleFullscreen() {
+  const el = document.getElementById('playerWrap');
+  if (!document.fullscreenElement) {
+    el.requestFullscreen?.() || el.webkitRequestFullscreen?.();
+  } else {
+    document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+  }
+}
+
+function getEndingKey() {
+  const key = STATE.choices.join('');
+  if (ENDINGS[key]) return key;
+  if (key === 'AABB' || key === 'ABAB' || key === 'ABBA') return key;
+  const counts = { A: 0, B: 0, C: 0 };
+  STATE.choices.forEach(c => counts[c]++);
+  const majority = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
+  if (majority === 'A' && counts.A >= 3) return 'AAAA';
+  if (majority === 'B' && counts.B >= 3) return 'BBBB';
+  if (majority === 'C' && counts.C >= 3) return 'CCCC';
+  return 'MIXED';
+}
+
+function showEnding() {
+  const key = getEndingKey();
+  const ending = ENDINGS[key] || ENDINGS['DEFAULT'];
+
+  document.getElementById('endingTitle').textContent = ending.title;
+  document.getElementById('endingSubtitle').textContent = ending.sub;
+  document.getElementById('endingDesc').textContent = ending.desc;
+  document.getElementById('endStatChoices').textContent = STATE.choices.length;
+  document.getElementById('endStatPct').textContent = ending.pct;
+
+  document.getElementById('endingOverlay').classList.add('active');
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  container.innerHTML = '';
+  const colors = ['#ff6b6b','#f7931e','#4ecdc4','#44a08d','#fff','#ffd93d','#6c5ce7'];
+  for (let i = 0; i < 80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = (Math.random() * 8 + 6) + 'px';
+    piece.style.height = (Math.random() * 8 + 6) + 'px';
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    piece.style.animationDelay = (Math.random() * 1.5) + 's';
+    container.appendChild(piece);
+  }
+}
+
+function restartMovie() {
+  STATE.choices = [];
+  STATE.currentChoice = 0;
+  STATE.currentTime = 0;
+  STATE.rewindUsed = false;
+  STATE.playing = false;
+  STATE.inChoiceScreen = false;
+  localStorage.removeItem('cplus_choices');
+  localStorage.removeItem('cplus_rewind');
+
+  document.getElementById('endingOverlay').classList.remove('active');
+  document.getElementById('choiceOverlay').classList.remove('active');
+  document.getElementById('confettiContainer').innerHTML = '';
+  updateDisplay();
+  updateSidebar();
+  STATE.playing = true;
+  document.getElementById('playPauseBtn').textContent = '⏸';
+}
+
+function goHome() {
+  if (STATE.interval) clearInterval(STATE.interval);
+  STATE.playing = false;
+  STATE.inChoiceScreen = false;
+
+  document.getElementById('endingOverlay').classList.remove('active');
+  document.getElementById('choiceOverlay').classList.remove('active');
+  document.getElementById('playerSection').classList.remove('active');
+  document.getElementById('sidebarToggle').classList.remove('visible');
+  document.getElementById('choicesSidebar').classList.remove('open');
+  document.getElementById('heroSection').style.display = '';
+  document.getElementById('statsSection').style.display = '';
+}
+
+function shareResult() {
+  const key = getEndingKey();
+  const ending = ENDINGS[key] || ENDINGS['DEFAULT'];
+  const text = `Ik heb "De Perfecte Misdaad" op Canal+ gekeken! Mijn einde: ${ending.title}. Probeer het zelf!`;
+  if (navigator.share) {
+    navigator.share({ title: 'De Perfecte Misdaad - Canal+', text });
+  } else {
+    navigator.clipboard?.writeText(text);
+    alert('Resultaat gekopieerd naar klembord!');
+  }
+}
+
+function toggleSidebar() {
+  document.getElementById('choicesSidebar').classList.toggle('open');
+}
+
+function updateSidebar() {
+  const container = document.getElementById('sidebarContent');
+  if (STATE.choices.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-secondary);font-size:15px">Nog geen keuzes gemaakt. Start het verhaal!</p>';
+    return;
+  }
+  container.innerHTML = STATE.choices.map((c, i) => {
+    const opt = CHOICES_DATA[i].options.find(o => o.id === c);
+    return `<div class="choice-history-item">
+      <div class="ch-label">Keuze ${i + 1}</div>
+      <div class="ch-text">Optie ${c}: ${opt ? opt.label : '—'}</div>
+    </div>`;
+  }).join('');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    togglePlayPause();
+  }
+  if (STATE.inChoiceScreen) {
+    const ci = STATE.currentChoice;
+    if (ci < CHOICES_DATA.length) {
+      if (e.key === '1' || e.key === 'a' || e.key === 'A') makeChoice(ci, 'A');
+      if (e.key === '2' || e.key === 'b' || e.key === 'B') makeChoice(ci, 'B');
+      if (e.key === '3' || e.key === 'c' || e.key === 'C') makeChoice(ci, 'C');
+    }
+  }
+  if (e.code === 'ArrowLeft')  skipBack();
+  if (e.code === 'ArrowRight') skipForward();
+});
+
+const saved = JSON.parse(localStorage.getItem('cplus_choices') || '[]');
+if (saved.length > 0) {
+  STATE.choices = saved;
+  STATE.currentChoice = saved.length;
+  STATE.rewindUsed = JSON.parse(localStorage.getItem('cplus_rewind') || 'false');
+}
+
+updateDisplay();
+</script>
+</body>
+</html>
