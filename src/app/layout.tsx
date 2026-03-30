@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CANAL+ | The Perfect Crime — Choose Your Story",
-  description: "Interactive thriller — YOU choose who the killer is",
+  title: "CANAL+ | Schaduw van de Waarheid",
+  description: "Interactief onderzoeksdrama waarin jij de waarheid interpreteert.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

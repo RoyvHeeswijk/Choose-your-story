@@ -1,12 +1,17 @@
 "use client";
 
-import { useCallback, ReactNode } from "react";
+import { useCallback, ReactNode, useEffect, useMemo, useState } from "react";
 import { formatTime, TOTAL_TIME, SceneSegment } from "@/data/gameData";
 
 interface VideoPlayerProps {
   currentTime: number;
   playing: boolean;
   scene: SceneSegment;
+  perspectiveLabel: string;
+  currentEffect: string | null;
+  choicePoints: number[];
+  currentChoiceIndex: number;
+  totalChoices: number;
   narratorParagraphCount: number;
   narratorSpeaking: boolean;
   onTogglePlay: () => void;
@@ -20,6 +25,11 @@ export default function VideoPlayer({
   currentTime,
   playing,
   scene,
+  perspectiveLabel,
+  currentEffect,
+  choicePoints,
+  currentChoiceIndex,
+  totalChoices,
   narratorParagraphCount,
   narratorSpeaking,
   onTogglePlay,
@@ -28,8 +38,14 @@ export default function VideoPlayer({
   onSeek,
   children,
 }: VideoPlayerProps) {
+  const [videoFailed, setVideoFailed] = useState(false);
   const pct = (currentTime / TOTAL_TIME) * 100;
-  const timeStr = `${formatTime(currentTime)} / 90:00`;
+  const timeStr = `${formatTime(currentTime)} / ${formatTime(TOTAL_TIME)}`;
+  const derivedVideoPath = useMemo(() => {
+    if (scene.video) return scene.video;
+    if (!scene.image.startsWith("/images/")) return "";
+    return scene.image.replace("/images/", "/videos/").replace(/\.(png|jpg|jpeg|webp)$/i, ".mp4");
+  }, [scene.image, scene.video]);
 
   const visibleCount = Math.min(
     scene.narrative.length,
@@ -56,14 +72,32 @@ export default function VideoPlayer({
     }
   }, []);
 
+  useEffect(() => {
+    setVideoFailed(false);
+  }, [scene.title, derivedVideoPath]);
+
   return (
     <div className="container">
       <div className="player-wrap" id="playerWrap">
         <div className="scene-visual">
           <div className="scene-fallback" style={{ backgroundImage: `url(${scene.image})` }} />
+          {!videoFailed && derivedVideoPath && (
+            <video
+              key={derivedVideoPath}
+              className="scene-video"
+              src={derivedVideoPath}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              onError={() => setVideoFailed(true)}
+            />
+          )}
           <div className="scene-overlay">
             <div className="scene-timer">{timeStr}</div>
             <div className="scene-narrative scene-subtitles">
+              <div className="scene-perspective">Perspectief: {perspectiveLabel}</div>
               <h2 className="scene-chapter-title">{scene.title}</h2>
               <div className="scene-paragraphs">
                 {visibleParagraphs.map((p, i) => {
@@ -89,19 +123,24 @@ export default function VideoPlayer({
                     <span className="eq-bar" />
                     <span className="eq-bar" />
                   </span>
-                  Listening...
+                  Verteller actief...
                 </div>
               )}
+              {currentEffect && <div className="scene-effect">{currentEffect}</div>}
             </div>
           </div>
         </div>
         <div className="controls">
           <div className="progress-wrap" onClick={handleSeek}>
             <div className="progress-fill" style={{ width: `${pct}%` }} />
-            <div className="choice-marker" style={{ left: "22.2%" }} title="Choice 1" />
-            <div className="choice-marker" style={{ left: "44.4%" }} title="Choice 2" />
-            <div className="choice-marker" style={{ left: "66.6%" }} title="Choice 3" />
-            <div className="choice-marker" style={{ left: "88.8%" }} title="Choice 4" />
+            {choicePoints.map((point, index) => (
+              <div
+                key={point}
+                className="choice-marker"
+                style={{ left: `${(point / TOTAL_TIME) * 100}%` }}
+                title={`Choice ${index + 1}`}
+              />
+            ))}
           </div>
           <div className="control-row">
             <div className="ctrl-left">
@@ -115,7 +154,10 @@ export default function VideoPlayer({
             </div>
             <div className="ctrl-right">
               <span className="chapter-label">
-                {scene.title.replace(/^Chapter \d+\s*[—–-]\s*/i, "")}
+                {scene.title.replace(/^(Chapter|Hoofdstuk)\s*\d+\s*[—–-]\s*/i, "")}
+              </span>
+              <span className="chapter-label">
+                Keuze {Math.min(currentChoiceIndex + 1, totalChoices)}/{totalChoices}
               </span>
               <button className="ctrl-btn" onClick={handleFullscreen}>⛶</button>
             </div>

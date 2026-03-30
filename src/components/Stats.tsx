@@ -1,17 +1,16 @@
 "use client";
 
 const STATS = [
-  { number: "8", label: "Unique endings" },
-  { number: "90", label: "Min. your story" },
-  { number: "78%", label: "Viewer rating" },
-  { number: "-40%", label: "Less scrolling" },
-  { number: "+40%", label: "Engagement" },
+  { number: "1", label: "Kies perspectief" },
+  { number: "2", label: "Maak kleine keuzes" },
+  { number: "3", label: "Krijg grote payoff" },
 ];
 
 export default function Stats() {
   return (
     <section className="stats">
       <div className="container">
+        <h2 className="stats-title">Hoe het werkt</h2>
         <div className="stats-grid">
           {STATS.map((s) => (
             <div className="stat-card" key={s.label}>

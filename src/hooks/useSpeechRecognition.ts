@@ -1,11 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ChoiceOption } from "@/data/gameData";
 
 type SpeechStatus = "idle" | "listening" | "error" | "unsupported";
 
 interface UseSpeechRecognitionArgs {
   active: boolean;
+  options?: ChoiceOption[];
   onMatch: (value: string) => void;
 }
 
@@ -49,7 +51,7 @@ declare global {
   }
 }
 
-function matchABC(spoken: string): "A" | "B" | "C" | null {
+function matchByIntent(spoken: string, options: ChoiceOption[]): string | null {
   const n = spoken
     .replace(/[.,!?]/g, " ")
     .replace(/\s+/g, " ")
@@ -60,31 +62,28 @@ function matchABC(spoken: string): "A" | "B" | "C" | null {
   if (n === "b" || /\b(optie|option)\s*b\b/.test(n) || /\b(twee|two|2nd|second)\b/.test(n)) return "B";
   if (n === "c" || /\b(optie|option)\s*c\b/.test(n) || /\b(drie|three|3rd|third)\b/.test(n)) return "C";
 
-  // Choice set 1 — glove
-  if (n.includes("husband") || n.includes("confront") || n.includes("estate")) return "A";
-  if (n.includes("mistress") || n.includes("shadow")) return "B";
-  if (n.includes("money") || n.includes("corporate") || n.includes("follow")) return "C";
+  const scores = options.map((option) => {
+    let score = 0;
+    option.intentTags.forEach((tag) => {
+      if (n.includes(tag.toLowerCase())) score += 2;
+    });
+    option.label
+      .toLowerCase()
+      .split(" ")
+      .filter((word) => word.length > 3)
+      .forEach((word) => {
+        if (n.includes(word)) score += 1;
+      });
+    return { id: option.id, score };
+  });
 
-  // Choice set 2 — witness
-  if (n.includes("deal") || n.includes("accept") || n.includes("immunity")) return "A";
-  if (n.includes("bluff") || n.includes("intimidate")) return "B";
-  if (n.includes("trust") && n.includes("no")) return "C";
-  if (n.includes("nobody") || n.includes("no one")) return "C";
-
-  // Choice set 3 — threat
-  if (n.includes("police") || n.includes("inspector")) return "A";
-  if (n.includes("trap") || n.includes("bait")) return "B";
-  if (n.includes("undercover")) return "C";
-
-  // Choice set 4 — finale
-  if (n.includes("lay") || n.includes("everything") || n.includes("evidence")) return "A";
-  if (n.includes("psychological") || n.includes("silence") || n.includes("long game")) return "B";
-  if (n.includes("pact") || n.includes("alliance") || n.includes("surprise")) return "C";
+  const best = scores.sort((a, b) => b.score - a.score)[0];
+  if (best && best.score > 0) return best.id;
 
   return null;
 }
 
-export function useSpeechRecognition({ active, onMatch }: UseSpeechRecognitionArgs): SpeechResult {
+export function useSpeechRecognition({ active, options = [], onMatch }: UseSpeechRecognitionArgs): SpeechResult {
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const [status, setStatus] = useState<SpeechStatus>("idle");
   const [transcript, setTranscript] = useState("");
@@ -138,7 +137,7 @@ export function useSpeechRecognition({ active, onMatch }: UseSpeechRecognitionAr
       setTranscript(spoken);
       if (!spoken) return;
 
-      const m = matchABC(spoken.toLowerCase());
+      const m = matchByIntent(spoken.toLowerCase(), options);
       if (m) onMatch(m);
     };
 
@@ -169,7 +168,7 @@ export function useSpeechRecognition({ active, onMatch }: UseSpeechRecognitionAr
     return () => {
       stopRecognition();
     };
-  }, [active, onMatch, stopRecognition, supported]);
+  }, [active, onMatch, options, stopRecognition, supported]);
 
   return { status, transcript, error, supported };
 }
